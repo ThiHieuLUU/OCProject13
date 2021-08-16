@@ -59,14 +59,34 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 - `pytest`
 
 #### Base de données
-
-- `cd /path/to/Python-OC-Lettings-FR`
-- Ouvrir une session shell `sqlite3`
-- Se connecter à la base de données `.open oc-lettings-site.sqlite3`
-- Afficher les tables dans la base de données `.tables`
-- Afficher les colonnes dans le tableau des profils, `pragma table_info(oc_lettings_site_profile);`
-- Lancer une requête sur la table des profils, `select user_id, favorite_city from oc_lettings_site_profile where favorite_city like 'B%';`
-- `.quit` pour quitter
+* Avant de refactorer le codes
+  - `cd /path/to/Python-OC-Lettings-FR`
+  - Ouvrir une session shell `sqlite3`
+  - Se connecter à la base de données `.open oc-lettings-site.sqlite3`
+  - Afficher les tables dans la base de données `.tables`
+  - Afficher les colonnes dans le tableau des profils, `pragma table_info(oc_lettings_site_profile);`
+  - Lancer une requête sur la table des profils, `select user_id, favorite_city from oc_lettings_site_profile where favorite_city like 'B%';`
+  - `.quit` pour quitter
+  
+* Refactorer le codes:
+  - `cd /path/to/Python-OC-Lettings-FR`
+  - Préserver la base de données `cp oc-lettings-site.sqlite3 oc-lettings-site-old.sqlite3 `
+  - Créer deux applications : lettings et profiles puis refactorer le code de oc_lettings_site à ces deux apps.
+  - Dans setting.py, ajouter dans INSTALLED_APPS ces deux apps: 'lettings' et 'profiles'
+  - Lancer `python manage.py makemigrations` puis `python manage.py migrate` 
+  - Une nouvelle base de données crée sous le nom: `oc-lettings-site.sqlite3`
+* Après d'avoir refactoré le code, copier les données:
+  - Ouvrir une session shell `sqlite3`
+  - Effecter les commands suivants pour copier les tables de l'ancienne db à la nouvelle db :
+  ```
+  .open oc-lettings-site-old.sqlite3
+  ATTACH DATABASE 'oc-lettings-site.sqlite3' AS new_db;
+  INSERT INTO new_db.lettings_letting SELECT * FROM oc_lettings_site_letting;
+  INSERT INTO new_db.lettings_address SELECT * FROM oc_lettings_site_address;
+  INSERT INTO new_db.profiles_profile SELECT * FROM oc_lettings_site_profile;
+  ```
+    
+    
 
 #### Panel d'administration
 
