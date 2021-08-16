@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Profile
 
+from django.http import HttpResponse
+from django.template import loader
 
 # Sed placerat quam in pulvinar commodo. Nullam laoreet consectetur ex, sed consequat libero
 # pulvinar eget. Fusc faucibus, urna quis auctor pharetra, massa dolor cursus neque, quis dictum
@@ -8,7 +10,7 @@ from .models import Profile
 def index(request):
     profiles_list = Profile.objects.all()
     context = {'profiles_list': profiles_list}
-    return render(request, 'profiles_index.html', context)
+    return render(request, 'profiles/index.html', context)
 
 
 # Aliquam sed metus eget nisi tincidunt ornare accumsan eget lac laoreet neque quis,
@@ -18,4 +20,4 @@ def index(request):
 def profile(request, username):
     profile = Profile.objects.get(user__username=username)
     context = {'profile': profile}
-    return render(request, 'profile.html', context)
+    return render(request, 'profiles/profile.html', context)
