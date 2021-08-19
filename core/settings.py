@@ -1,4 +1,20 @@
 import os
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://4df3825b219046d0aba9b56f89f232b5@o949854.ingest.sentry.io/5898555",
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True,
+)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -11,9 +27,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+#
+# ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = []
+# To use sentry in integrations, set DEBUG = False and ALLOWED_HOSTS = ['127.0.0.1']
+# To run: python manage.py runserver --insecure
+DEBUG = False
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
