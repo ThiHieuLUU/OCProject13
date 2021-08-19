@@ -19,15 +19,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'oc_lettings_site.apps.OCLettingsSiteConfig',
+    # 'oc_lettings_site.apps.OCLettingsSiteConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # apps
     "lettings",
     "profiles",
+    "oc_lettings_site"  # change project to app
 ]
 
 MIDDLEWARE = [
@@ -40,7 +42,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'oc_lettings_site.urls'
+# ROOT_URLCONF = 'oc_lettings_site.urls'
+# After code refactoring ("core" project is replaced "oc_lettings_site" ), change to:
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
@@ -58,7 +62,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'oc_lettings_site.wsgi.application'
+# WSGI_APPLICATION = 'oc_lettings_site.wsgi.application'
+# After code refactoring ("core" project is replaced "oc_lettings_site" ), change to:
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
