@@ -1,13 +1,13 @@
 asgiref==3.4.1
 attrs==21.2.0
 certifi==2021.5.30
+coverage==5.5
 Django==3.0
 entrypoints==0.3
 flake8==3.7.0
 iniconfig==1.1.1
 mccabe==0.6.1
 packaging==21.0
-pkg_resources==0.0.0
 pluggy==0.13.1
 py==1.10.0
 pycodestyle==2.5.0
