@@ -27,14 +27,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-#
-# ALLOWED_HOSTS = []
+DEBUG = True
+ALLOWED_HOSTS = []
 
 # To use sentry in integrations, set DEBUG = False and ALLOWED_HOSTS = ['127.0.0.1']
 # To run: python manage.py runserver --insecure
-DEBUG = False
-ALLOWED_HOSTS = ['127.0.0.1']
+# DEBUG = False
+# ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
