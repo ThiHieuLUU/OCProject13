@@ -3,6 +3,7 @@ attrs==21.2.0
 certifi==2021.5.30
 coverage==5.5
 Django==3.0
+django-environ==0.4.5
 entrypoints==0.3
 flake8==3.7.0
 iniconfig==1.1.1
