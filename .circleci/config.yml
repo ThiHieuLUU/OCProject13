@@ -10,7 +10,7 @@ jobs:
       - run: docker build -t $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 .
       - run:
           name: check PEP8
-          command: flake8
+          command: docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 flake8
       # test
       - run:
           name: Run tests
