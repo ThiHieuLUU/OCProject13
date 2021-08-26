@@ -28,6 +28,22 @@ jobs:
 #            echo DSN_SENTRY
 #            docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 pytest
 
+  publish-on-dockerhub:
+    environment:
+      IMAGE_NAME: oc-lettings-site
+    docker:
+      - image: cimg/base:2021.07
+    steps:
+      - setup_remote_docker
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
+            docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1
+            docker logout
+#            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+#            docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1
+
   build_and_deploy:
     docker:
       - image: cimg/base:2021.07
@@ -55,6 +71,9 @@ workflows:
   heroku_deploy:
     jobs:
       - build_and_test
-      - build_and_deploy:
+      - publish-on-dockerhub:
           requires:
             - build_and_test
+      - build_and_deploy:
+          requires:
+            - publish-on-dockerhub
