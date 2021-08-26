@@ -11,7 +11,8 @@ jobs:
       # test
       - run:
           name: Run tests
-          env:
+#          env:
+          environment:
             SECRET_KEY: $SECRET_KEY
             DSN_SENTRY: $DSN_SENTRY
           command: docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 pytest
@@ -35,6 +36,7 @@ jobs:
       - heroku/release-docker-image:
           process-types: web
 orbs:
+  python: circleci/python@1.2
   heroku: circleci/heroku@1.2.6
 version: 2.1
 workflows:

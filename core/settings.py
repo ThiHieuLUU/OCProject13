@@ -8,7 +8,8 @@ env = environ.Env()
 environ.Env.read_env()
 
 sentry_sdk.init(
-    dsn=env('DSN_SENTRY'),
+    # dsn=env('DSN_SENTRY'),
+    dsn=os.getenv('DSN_SENTRY'),
     integrations=[DjangoIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
@@ -29,7 +30,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+# SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = False
 ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
