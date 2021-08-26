@@ -1,3 +1,4 @@
+version: 2.1
 jobs:
   build_and_test:
     environment:
@@ -38,8 +39,9 @@ jobs:
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
-            docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
-            docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1
+#            docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $IMAGE_NAME:$CIRCLE_SHA1
             docker logout
 #            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 #            docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1
@@ -66,7 +68,7 @@ jobs:
 orbs:
   python: circleci/python@1.2
   heroku: circleci/heroku@1.2.6
-version: 2.1
+
 workflows:
   heroku_deploy:
     jobs:
