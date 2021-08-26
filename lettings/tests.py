@@ -61,5 +61,4 @@ class TestLetting(TestCase):
         string = str.encode(f'<p>{address.city}, {address.state} {address.zip_code}</p>')
         self.assertEqual(True, string in response.content)
 
-        # self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.status_code, 300)
+        self.assertEqual(response.status_code, 200)

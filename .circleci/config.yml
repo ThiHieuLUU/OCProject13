@@ -14,7 +14,7 @@ jobs:
 #          env:
           environment:
             SECRET_KEY: $SECRET_KEY
-#            DSN_SENTRY: $DSN_SENTRY
+            DSN_SENTRY: $DSN_SENTRY
 #          env:
 #            SECRET_KEY: $SECRET_KEY
           command: docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 pytest
