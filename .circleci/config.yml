@@ -15,8 +15,12 @@ jobs:
           environment:
 #            SECRET_KEY: $SECRET_KEY
             DSN_SENTRY: $DSN_SENTRY
+          env:
             SECRET_KEY: $SECRET_KEY
-          command: docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 pytest
+#          command: docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 pytest
+          command: |
+            echo SECRET_KEY
+            docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 pytest
   build_and_deploy:
     docker:
       - image: cimg/base:2021.07
