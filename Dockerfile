@@ -5,4 +5,5 @@ RUN mkdir oc_project13
 WORKDIR /oc_project13
 ADD . /oc_project13/
 RUN pip install -r requirements.txt
-CMD python manage.py runserver 0.0.0.0:$PORT --insecure
+#CMD python manage.py runserver 0.0.0.0:$PORT --insecure
+CMD python manage.py runserver 0.0.0.0:$PORT
