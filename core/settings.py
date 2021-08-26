@@ -2,8 +2,13 @@ import os
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
+import environ
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
+
 sentry_sdk.init(
-    dsn="https://4df3825b219046d0aba9b56f89f232b5@o949854.ingest.sentry.io/5898555",
+    dsn=env('DSN_SENTRY'),
     integrations=[DjangoIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
@@ -13,7 +18,7 @@ sentry_sdk.init(
 
     # If you wish to associate users to errors (assuming you are using
     # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True,
+    send_default_pii=True
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -24,20 +29,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
+SECRET_KEY = env('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-# ALLOWED_HOSTS = []
-
-# To use sentry in integrations, set DEBUG = False and ALLOWED_HOSTS = ['127.0.0.1']
-# To run: python manage.py runserver --insecure
 DEBUG = False
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
 
 
 # Application definition
-
 INSTALLED_APPS = [
     # 'oc_lettings_site.apps.OCLettingsSiteConfig',
     'django.contrib.admin',
