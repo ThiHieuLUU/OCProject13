@@ -34,8 +34,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = False
-ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
+# ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
 
 
 # Application definition
