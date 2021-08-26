@@ -17,8 +17,8 @@ jobs:
 #            DSN_SENTRY: $DSN_SENTRY
 #          env:
 #            SECRET_KEY: $SECRET_KEY
-#          command: docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 pytest
-          command: |
+          command: docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 pytest
+#          command: |
 #            echo SECRET_KEY
 #            echo DSN_SENTRY
             docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 pytest
