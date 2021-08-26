@@ -25,7 +25,7 @@ jobs:
       - run: heroku container:login
       - run: heroku config:set SECRET_KEY=$SECRET_KEY -a oc-lettings-7
       - run: heroku config:set DSN_SENTRY=$DSN_SENTRY -a oc-lettings-7
-      - run: heroku config:set ALLOWED_HOSTS=$ALLOWED_HOSTS -a oc-lettings-7
+#      - run: heroku config:set ALLOWED_HOSTS=$ALLOWED_HOSTS -a oc-lettings-7
       - heroku/push-docker-image:
           process-types: web
       - heroku/release-docker-image:
