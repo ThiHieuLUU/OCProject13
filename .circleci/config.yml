@@ -1,5 +1,7 @@
 jobs:
   build_and_test:
+    environment:
+      IMAGE_NAME: oc-lettings-site
     docker:
       - image: cimg/base:2021.07
     steps:
@@ -7,10 +9,10 @@ jobs:
           version: 19.03.13
       # build
       - checkout
-      - run: docker build -t $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 .
+      - run: docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
       - run:
           name: check PEP8
-          command: docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 flake8
+          command: docker run $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 flake8
       # test
       - run:
           name: Run tests
@@ -25,6 +27,7 @@ jobs:
 #            echo SECRET_KEY
 #            echo DSN_SENTRY
 #            docker run $DOCKERHUB_USERNAME/oc-lettings-site:$CIRCLE_SHA1 pytest
+
   build_and_deploy:
     docker:
       - image: cimg/base:2021.07
