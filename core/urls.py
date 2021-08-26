@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 
-def trigger_error(request):
-    division_by_zero = 1 / 0
+# def trigger_error(request):
+#     division_by_zero = 1 / 0
 
 
 urlpatterns = [
@@ -26,5 +26,5 @@ urlpatterns = [
     path('', include('oc_lettings_site.urls')),
     path('', include('profiles.urls')),
     path('', include('lettings.urls')),
-    path('sentry-debug/', trigger_error),
+    # path('sentry-debug/', trigger_error),
 ]
