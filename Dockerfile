@@ -24,9 +24,9 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . .
 
-# collect static files
-RUN mkdir -p ./static
-RUN python manage.py collectstatic --noinput
+## collect static files
+#RUN mkdir -p ./static
+#RUN python manage.py collectstatic --noinput
 
 # add and run as non-root user
 RUN adduser -D myuser
