@@ -58,7 +58,7 @@ jobs:
       - run: heroku config:set SECRET_KEY=$SECRET_KEY -a oc-lettings-7
       - run: heroku config:set DSN_SENTRY=$DSN_SENTRY -a oc-lettings-7
       - run: heroku config:set ALLOWED_HOSTS=$ALLOWED_HOSTS -a oc-lettings-7
-      - run: heroku config:set DEBUG_COLLECTSTATIC=1
+      - run: heroku config:set DEBUG_COLLECTSTATIC=1 -a oc-lettings-7
       - run: heroku config:set DISABLE_COLLECTSTATIC=0 -a oc-lettings-7
       - run: heroku restart -a oc-lettings-7
       - heroku/push-docker-image:
