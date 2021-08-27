@@ -4,7 +4,8 @@ jobs:
     environment:
       IMAGE_NAME: oc-lettings-site
     docker:
-      - image: cimg/base:2021.07
+#      - image: cimg/base:2021.07
+      - image: python:3.8-slim-buster
     steps:
       - setup_remote_docker:
           version: 19.03.13
@@ -33,7 +34,8 @@ jobs:
     environment:
       IMAGE_NAME: oc-lettings-site
     docker:
-      - image: cimg/base:2021.07
+#      - image: cimg/base:2021.07
+      - image: python:3.8-slim-buster
     steps:
       - setup_remote_docker
       - run:
