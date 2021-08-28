@@ -8,7 +8,6 @@ env = environ.Env()
 environ.Env.read_env()
 
 sentry_sdk.init(
-    # dsn=env('DSN_SENTRY'),
     dsn=os.getenv('DSN_SENTRY'),
     integrations=[DjangoIntegration()],
 
@@ -30,15 +29,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = env('SECRET_KEY')
 SECRET_KEY = os.getenv('SECRET_KEY')
-# SECRET_KEY = os.environ.get('SECRET_KEY')
-# SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
 
 DEBUG = False
-# ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
-
 
 # Application definition
 INSTALLED_APPS = [
@@ -137,24 +131,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # # https://docs.djangoproject.com/en/3.0/howto/static-files/
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#
-# STATIC_URL = '/static/'
-
-
-# # Static files (CSS, JavaScript, Images)
-# # https://docs.djangoproject.com/en/1.9/howto/static-files/
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-#
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATIC_URL = '/static/'
-#
-# # Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
-
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

@@ -12,7 +12,7 @@ executors:
       - image: cimg/python:3.8
 
 jobs:
-  complite-and-test:
+  compile-and-test:
     executor: docker-executor
     steps:
       - checkout
@@ -35,7 +35,7 @@ jobs:
             DSN_SENTRY: $DSN_SENTRY
           command: pytest
 
-  dockerize and publish:
+  dockerize-and-publish:
     executor: docker-executor
     steps:
       - checkout
@@ -67,21 +67,21 @@ jobs:
 workflows:
   build-test-deploy:
     jobs:
-      - complite-and-test:
-          filters: # Only check the main branch
+      - compile-and-test:
+          filters: # Only com the main branch
             branches:
               only: main
 
-      - dockerize and publish:
+      - dockerize-and-publish:
           requires:
-            - complite-and-test
+            - compile-and-test
           filters: # Only dockerize from main branch
             branches:
               only: main
 
       - deploy-to-heroku:
           requires:
-            - dockerize and publish
+            - dockerize-and-publish
           filters: # Only deploy from main branch
             branches:
               only: main
