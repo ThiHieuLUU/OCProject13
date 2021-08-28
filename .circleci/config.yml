@@ -50,37 +50,17 @@ jobs:
             docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1
             docker logout
 
-#  publish-docker-image-to-dockerhub:
-#    executor: docker-executor
-#    steps:
-#      - setup_remote_docker
-#      - run:
-#          name: Publish Docker Image to Docker Hub
-#          command: |
-#            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-#            docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1
-#            docker logout
-
   deploy-to-heroku:
     executor: heroku/default
     steps:
       - checkout
       - heroku/install
-      - run: heroku container:login
       - run: heroku config:set SECRET_KEY=$SECRET_KEY -a $HEROKU_APP_NAME
       - run: heroku config:set DSN_SENTRY=$DSN_SENTRY -a $HEROKU_APP_NAME
       - run: heroku config:set ALLOWED_HOSTS=$ALLOWED_HOSTS -a $HEROKU_APP_NAME
       - heroku/deploy-via-git:
           app-name: $HEROKU_APP_NAME
           force: true
-#      - run: heroku config:set DEBUG_COLLECTSTATIC=1 -a oc-lettings-7
-#      - run: heroku config:set DISABLE_COLLECTSTATIC=1 -a oc-lettings-7
-#      - run: heroku restart -a oc-lettings-7
-#        - run : docker pull $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1
-#      - heroku/push-docker-image:
-#          process-types: web
-#      - heroku/release-docker-image:
-#          process-types: web
 
 workflows:
   build-test-deploy:
