@@ -46,14 +46,13 @@ jobs:
   publish-docker-image-to-dockerhub:
     executor: docker-executor
     steps:
-     - run:
-         name: Publish Docker Image to Docker Hub
-#         run: echo '$DOCKERHUB_PASSWORD' | docker login --username $DOCKERHUB_USERNAME --password-stdin
-         command: |
-#           echo '$DOCKERHUB_PASSWORD' | docker login --username $DOCKERHUB_USERNAME --password-stdin
-           docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
-           docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1
-           docker logout
+      - setup_remote_docker
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1
+            docker logout
 
   deploy-to-heroku:
     executor: heroku/default
