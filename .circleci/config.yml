@@ -85,16 +85,20 @@ jobs:
 workflows:
   build-test-deploy:
     jobs:
-      - complite-and-test
-      - dockerize:
+      - complite-and-test:
+          requires:
+            - complite-and-test
+          filters: # Only check the main branch
+            branches:
+              only: main
+
+      - dockerize and publish:
           requires:
             - complite-and-test
           filters: # Only dockerize from main branch
             branches:
               only: main
-      - publish-docker-image-to-dockerhub:
-          requires:
-            - dockerize
+
       - deploy-to-heroku:
           requires:
             - publish-docker-image-to-dockerhub
