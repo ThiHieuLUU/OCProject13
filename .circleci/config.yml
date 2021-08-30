@@ -10,7 +10,6 @@ executors:
       IMAGE_NAME: oc-lettings-site
     docker:
       - image: cimg/python:3.8
-#      - image: python:3.8-slim-buster
 
 jobs:
   compile-and-test:
@@ -38,15 +37,11 @@ jobs:
 
   dockerize-and-publish:
     executor: docker-executor
-#    docker:
-##      - image: cimg/python:3.8
-#      - image: cimg/python:3.8
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Build Docker image
-#          command: docker build --tag ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${CIRCLE_SHA1} .
           command: docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
       - run:
           name: Publish Docker Image to Docker Hub
@@ -72,14 +67,14 @@ jobs:
 workflows:
   build-test-deploy:
     jobs:
-#      - compile-and-test:
-#          filters: # Only com the main branch
-#            branches:
-#              only: main
+      - compile-and-test:
+          filters: # Only compile the main branch
+            branches:
+              only: main
 
       - dockerize-and-publish:
-#          requires:
-#            - compile-and-test
+          requires:
+            - compile-and-test
           filters: # Only dockerize from main branch
             branches:
               only: main
