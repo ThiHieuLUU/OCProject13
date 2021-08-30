@@ -9,6 +9,7 @@ environ.Env.read_env()
 
 sentry_sdk.init(
     dsn=os.getenv('DSN_SENTRY'),
+    # dsn='https://9ffb1a5af896492fb649b694aab49d6b@o975323.ingest.sentry.io/5931303',
     integrations=[DjangoIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
@@ -30,7 +31,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
-
+# SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
 DEBUG = False
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
 
