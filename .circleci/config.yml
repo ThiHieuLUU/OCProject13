@@ -42,6 +42,9 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image
+          env:
+            SECRET_KEY: ${SECRET_KEY}
+            DSN_SENTRY: ${DSN_SENTRY}
           command: docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
       - run:
           name: Publish Docker Image to Docker Hub
