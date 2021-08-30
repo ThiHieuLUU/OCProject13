@@ -46,6 +46,7 @@ jobs:
           command: |
             docker build \
             --build-arg SECRET=${SECRET_KEY} \
+            --build-arg DSN=${DSN_SENTRY} \
             -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
 #          docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
 #          command: docker build --build-arg SECRET=${SECRET_KEY} -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
