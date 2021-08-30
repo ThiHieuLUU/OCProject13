@@ -9,8 +9,8 @@ executors:
     environment:
       IMAGE_NAME: oc-lettings-site
     docker:
-#      - image: cimg/python:3.8
-      - image: python:3.8-slim-buster
+      - image: cimg/python:3.8
+#      - image: python:3.8-slim-buster
 
 jobs:
   compile-and-test:
@@ -71,14 +71,14 @@ jobs:
 workflows:
   build-test-deploy:
     jobs:
-      - compile-and-test:
-          filters: # Only com the main branch
-            branches:
-              only: main
+#      - compile-and-test:
+#          filters: # Only com the main branch
+#            branches:
+#              only: main
 
       - dockerize-and-publish:
-          requires:
-            - compile-and-test
+#          requires:
+#            - compile-and-test
           filters: # Only dockerize from main branch
             branches:
               only: main
