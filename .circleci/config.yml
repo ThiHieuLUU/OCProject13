@@ -42,10 +42,12 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image
-#          arg:
-#            SECRET_KEY: ${SECRET_KEY}
-#            DSN_SENTRY: ${DSN_SENTRY}
-          command: docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
+
+          command: |
+            docker build \
+            --build-arg SECRET=${SECRET_KEY} \
+            -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
+#          docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
 #          command: docker build --build-arg SECRET=${SECRET_KEY} -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
       - run:
           name: Publish Docker Image to Docker Hub
