@@ -1,5 +1,6 @@
 # pull official base image
-FROM python:3.8-alpine
+#FROM python:3.8-alpine
+FROM python:3.8-buster
 
 # set work directory
 WORKDIR /app
@@ -28,10 +29,6 @@ COPY . .
 
 # collect static files
 RUN python manage.py collectstatic --noinput
-
-# add and run as non-root user
-RUN adduser -D myuser
-USER myuser
 
 # run gunicorn
 CMD gunicorn core.wsgi --bind 0.0.0.0:$PORT
