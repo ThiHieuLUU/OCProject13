@@ -1,3 +1,13 @@
+# config.yml
+
+# Workflows on the main branche of Github:
+#  - First, build and activate virtual environment to check PEP8 and all unit tests.
+# - Then if the first step passes, build Docker image and push to the Dockerhub.
+# - Finally, deploy the main branch to Heroku.
+# Condition:
+# - Image cloned from Docker hub works correctly (for all pages and admin page).
+# - Application deployed on Heroku works correctly (for all pages and admin page).
+
 version: 2.1
 
 orbs:
@@ -47,8 +57,6 @@ jobs:
             --build-arg SECRET=${SECRET_KEY} \
             --build-arg DSN="${DSN_SENTRY}" \
             -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
-#          docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
-#          command: docker build --build-arg SECRET=${SECRET_KEY} -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
@@ -73,21 +81,21 @@ jobs:
 workflows:
   build-test-deploy:
     jobs:
-#      - compile-and-test:
-#          filters: # Only compile the main branch
-#            branches:
-#              only: main
+      - compile-and-test:
+          filters: # Compile only on the main branch
+            branches:
+              only: main
 
       - dockerize-and-publish:
-#          requires:
-#            - compile-and-test
-          filters: # Only dockerize from main branch
+          requires:
+            - compile-and-test
+          filters: # Dockerize only on the main branch
             branches:
               only: main
 
       - deploy-to-heroku:
           requires:
             - dockerize-and-publish
-          filters: # Only deploy from main branch
+          filters: # Deploy only on the main branch
             branches:
               only: main

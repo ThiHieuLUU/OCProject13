@@ -50,12 +50,15 @@ class TestProfile(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_profiles_profile(self):
+        # Get profile to test
         profile = self.new_profile
         username = profile.user.username
 
+        # Get detail of a profile
         url = reverse('profiles:profile', kwargs={'username': username})
         response = self.client.get(url)
 
+        # Verify template used
         self.assertTemplateUsed(response, 'profiles/profile.html')
 
         string = str.encode(f"<title>{username}</title>")

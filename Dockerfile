@@ -1,5 +1,6 @@
-# pull official base image
-#FROM python:3.8-alpine
+# Dockerfile
+
+# pull official base image (python:3.8-buster is less sensible than python:3.8-alpine for Sqlite).
 FROM python:3.8-buster
 
 # set work directory
