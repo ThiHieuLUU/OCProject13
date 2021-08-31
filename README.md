@@ -99,3 +99,49 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+## Déploiement
+### Condition 
+Il faut avoir un compte pour :
+
+- Github
+- CircleCI
+- Dockerhub
+- Heroku
+- Sentry
+
+Ici, le compte de CircleCI connecte avec le compte de Github et détecte automatiquement 
+un nouveau projet poussé sur Github. Si un projet sur Github est choisi de suivre dans CircleCI, 
+chaque nouvelle version déclenche les flux de travail (workflows) défini dans le fichier config.yml.
+
+### Mise en place
+Pour un projet suivi par CircleCI, les variables sensibles et les données d'authentication des comptes 
+(ici, Dockerhub, Heroku, Sentry) sont nécessaire de paramétrer/cacher via Environment Variables du projet.
+
+Dans CircleCI, allez dans le projet, choisissez Project Settings > Environment Variables > 
+Add Environment Variable. Pour ce projet, les paramètres suivants sont mis dans Environment Variables:
+
+- DSN_SENTRY (c'est la valeur de dsn d'un projet créé dans Sentry).
+- SECRET_KEY (c'est la valeur de SECRET_KEY dans settings.py du projet).
+- DOCKERHUB_USERNAME (c'est l'username d'un compte Dockerhub).
+- DOCKERHUB_PASSWORD (c'est le Token Access du compte Dockerhub).
+- HEROKU_API_KEY (c'est le API Key du compte Heroku - voir dans Account Settings > API Key).
+- HEROKU_APP_NAME (c'est le nom d'une application créée dans Heroku - il faut la créer avant le déploiement).
+
+### Note sur l'image Docker
+Dans ce projet, l'image Docker est créée à partir de la branche "main" du projet sur Github. 
+L'image est poussée sur Dockerhub. Pour lancer cette image localement, la cloner depuis Dockerhub et
+la lancer localement.
+
+Exemple des commandes :
+```
+docker pull votre_username_dockerhub/oc-lettings-site:tag_image
+docker run --rm --publish 8000:8000 votre_username_dockerhub/oc-lettings-site:tag_image python manage.py runserver 0.0.0.0:8000
+```
+Puis aller dans "localhost:8000" pour naviguer l'application.
+
+Pour voir le résultat du flake 8 ou les tests :
+```
+docker run votre_username_dockerhub/oc-lettings-site:tag_image flake8
+docker run votre_username_dockerhub/oc-lettings-site:tag_image pytest
+```
