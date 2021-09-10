@@ -59,7 +59,7 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 - `pytest`
 
 #### Base de données
-* Avant de refactorer le codes
+* Avant de refactorer le code
   - `cd /path/to/Python-OC-Lettings-FR`
   - Ouvrir une session shell `sqlite3`
   - Se connecter à la base de données `.open oc-lettings-site.sqlite3`
@@ -73,19 +73,35 @@ Dans le reste de la documentation sur le développement local, il est supposé q
   - Préserver la base de données `cp oc-lettings-site.sqlite3 oc-lettings-site-old.sqlite3 `
   - Créer deux applications : lettings et profiles puis refactorer le code de oc_lettings_site à ces deux apps.
   - Dans setting.py, ajouter dans INSTALLED_APPS ces deux apps: 'lettings' et 'profiles'
-  - Lancer `python manage.py makemigrations` puis `python manage.py migrate` 
-  - Une nouvelle base de données crée sous le nom: `oc-lettings-site.sqlite3`
-* Après d'avoir refactoré le code, copier les données:
-  - Ouvrir une session shell `sqlite3`
-  - Effecter les commands suivants pour copier les tables de l'ancienne db à la nouvelle db :
-  ```
-  .open oc-lettings-site-old.sqlite3
-  ATTACH DATABASE 'oc-lettings-site.sqlite3' AS new_db;
-  INSERT INTO new_db.lettings_letting SELECT * FROM oc_lettings_site_letting;
-  INSERT INTO new_db.lettings_address SELECT * FROM oc_lettings_site_address;
-  INSERT INTO new_db.profiles_profile SELECT * FROM oc_lettings_site_profile;
-  ```
-    
+  - Créer un nouveau dossier "core" et déplacer les fichiers: asgi.py, settings.py  urls.py  wsgi.py depuis
+  oc_lettings_site (faire les modifications nécessaires, par exemple, remplacer "oc_lettings_site" par "core" dans quelque terms.)
+  - Transformer oc_lettings_site en une application: ajouter "oc_lettings_site" dans INSTALLED_APPS de setting.py
+* Après d'avoir refactoré le code, copier les données :
+  * Méthode 1:
+    - Préserver la base de données cp oc-lettings-site.sqlite3 oc-lettings-site-old.sqlite3 
+    - Lancer `python manage.py makemigrations` puis `python manage.py migrate` 
+    - Une nouvelle base de données crée sous le nom: `oc-lettings-site.sqlite3`
+
+    - Ouvrir une session shell `sqlite3`
+    - Effectuer les commands suivants pour copier les tables de l'ancienne db à la nouvelle db :
+    ```
+    .open oc-lettings-site-old.sqlite3
+    ATTACH DATABASE 'oc-lettings-site.sqlite3' AS new_db;
+    INSERT INTO new_db.lettings_letting SELECT * FROM oc_lettings_site_letting;
+    INSERT INTO new_db.lettings_address SELECT * FROM oc_lettings_site_address;
+    INSERT INTO new_db.profiles_profile SELECT * FROM oc_lettings_site_profile;
+    ```
+  * Méthode 2:
+    - Laisser Django générer les changements en lançant `python manage.py makemigrations`
+    - Les migrations sont créées, dans ce cas : lettings/migrations/0001_initial.py, 
+    profiles/migrations/0001_initial.py et oc_lettings_site/migrations/0003_auto_20210815_1634.py
+    - Pour obtenir le nom du modèle de Profile dans l'application du profiles, générez le SQL pour la migration qui crée le Profile :
+    `python manage.py sqlmigrate profiles 0001`
+    - Idem pour les modèles Address et Letting dans lettings: `python manage.py sqlmigrate lettings 0001`
+    - Pour réutiliser la base de données origine (oc-lettings-site-hieu.sqlite3), changer manuellement les fichiers : lettings/migrations/0001_initial.py, 
+    profiles/migrations/0001_initial.py et oc_lettings_site/migrations/0003_auto_20210815_1634.py (voir le détail dans ces fichiers). 
+    Un point commun, c'est de remplacer les migrations générées automatiques migrations.XXX() par migrations.SeparateDatabaseAndState()
+    - Puis lancer `python manage.py migrate` 
     
 
 #### Panel d'administration
