@@ -10,21 +10,89 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='letting',
-            name='address',
+        # migrations.RemoveField(
+        #     model_name='letting',
+        #     name='address',
+        # ),
+
+        migrations.SeparateDatabaseAndState(
+            state_operations=[
+                migrations.RemoveField(
+                    model_name='letting',
+                    name='address',
+                ),
+            ],
+            database_operations=[],
         ),
-        migrations.RemoveField(
-            model_name='profile',
-            name='user',
+
+
+        # migrations.RemoveField(
+        #     model_name='profile',
+        #     name='user',
+        # ),
+
+        migrations.SeparateDatabaseAndState(
+            state_operations=[
+                migrations.RemoveField(
+                    model_name='profile',
+                    name='user',
+                ),
+            ],
+            database_operations=[],
         ),
-        migrations.DeleteModel(
-            name='Address',
+
+        # migrations.DeleteModel(
+        #     name='Address',
+        # ),
+
+        migrations.SeparateDatabaseAndState(
+            state_operations=[
+                migrations.DeleteModel(
+                    name='Address',
+                ),
+            ],
+            database_operations=[
+                migrations.AlterModelTable(
+                    name='Address',
+                    table='lettings_address',
+                ),
+            ],
         ),
-        migrations.DeleteModel(
-            name='Letting',
+
+        # migrations.DeleteModel(
+        #     name='Letting',
+        # ),
+
+        migrations.SeparateDatabaseAndState(
+            state_operations=[
+                migrations.DeleteModel(
+                    name='Letting',
+                ),
+            ],
+            database_operations=[
+                migrations.AlterModelTable(
+                    name='Letting',
+                    table='lettings_letting',
+                ),
+            ],
         ),
-        migrations.DeleteModel(
-            name='Profile',
+
+        # migrations.DeleteModel(
+        #     name='Profile',
+        # ),
+
+        migrations.SeparateDatabaseAndState(
+            state_operations=[
+                migrations.DeleteModel(
+                    name='Profile',
+                ),
+            ],
+            database_operations=[
+                migrations.AlterModelTable(
+                    name='Profile',
+                    table='profiles_profile',
+                ),
+            ],
         ),
     ]
+
