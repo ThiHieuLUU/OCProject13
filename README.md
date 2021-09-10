@@ -70,7 +70,6 @@ Dans le reste de la documentation sur le développement local, il est supposé q
   
 * Refactorer le codes:
   - `cd /path/to/Python-OC-Lettings-FR`
-  - Préserver la base de données `cp oc-lettings-site.sqlite3 oc-lettings-site-old.sqlite3 `
   - Créer deux applications : lettings et profiles puis refactorer le code de oc_lettings_site à ces deux apps.
   - Dans setting.py, ajouter dans INSTALLED_APPS ces deux apps: 'lettings' et 'profiles'
   - Créer un nouveau dossier "core" et déplacer les fichiers: asgi.py, settings.py  urls.py  wsgi.py depuis
@@ -161,3 +160,25 @@ Pour voir le résultat du flake 8 ou les tests :
 docker run votre_username_dockerhub/oc-lettings-site:tag_image flake8
 docker run votre_username_dockerhub/oc-lettings-site:tag_image pytest
 ```
+
+### Note sur le lancement local du projet cloné depuis Github
+Depuis local, faire
+```
+git clone https://github.com/ochieuluu/Python-OC-Lettings-FR
+cd Python-OC-Lettings-FR
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+Il faut créer un fichier .env et le mettre dans le dossier "core" :
+```
+# core/.env
+SECRET_KEY=xxx
+DSN_SENTRY=xxx
+```
+Ici, xxx désigne la valeur de SECRET_KEY et DSN_SENTRY
+```
+python manage.py collectstatic --noinput
+python manage.py runserver
+```
+Aller dans http://127.0.0.1:8000/ pour naviguer le site web.
