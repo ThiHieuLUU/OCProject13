@@ -162,10 +162,11 @@ docker run votre_username_dockerhub/oc-lettings-site:tag_image pytest
 ```
 
 ### Note sur le lancement local du projet cloné depuis Github
-Depuis local, faire
+Ce projet est poussé dans mon Github sous le nom OCProject13 (le nom original : Python-OC-Lettings-FR).
+Pour le lancer depuis local, faire :
 ```
-git clone https://github.com/ochieuluu/Python-OC-Lettings-FR
-cd Python-OC-Lettings-FR
+git clone https://github.com/ochieuluu/OCProject13
+cd OCProject13
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
